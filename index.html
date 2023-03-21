@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>resturant</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="box">
+      <div class="menu">
+        <div id="live_data"></div>
+        <h1>Restaurant</h1>
+        <h2>Food Menu</h2>
+        <!-- <div id="status"></div> -->
+        <div id="menuBox">
+          <div class="parent-box" id="indian_dish" draggable="true">
+            <h3>indian_dish</h3>
+            <div class="child-box" draggable="true">aloo paratha</div>
+            <div class="child-box" draggable="true">chicken tikka masala</div>
+            <div class="child-box" draggable="true">saag paneer</div>
+            <div class="child-box" draggable="true">biryani</div>
+            <div class="child-box" draggable="true">dosa</div>
+          </div>
+          <div class="parent-box" id="chinese_dish" draggable="true">
+            <h3>chinese_dish</h3>
+            <div class="child-box" draggable="true">kung pao chicken</div>
+            <div class="child-box" draggable="true">mapo tofu</div>
+            <div class="child-box" draggable="true">hot and sour soup</div>
+            <div class="child-box" draggable="true">dim sum</div>
+            <div class="child-box" draggable="true">fried rice</div>
+          </div>
+          <div class="parent-box" id="european_dish" draggable="true">
+            <h3>european_dishs</h3>
+            <div class="child-box" draggable="true">spaghetti carbonara</div>
+            <div class="child-box" draggable="true">fish and chips</div>
+            <div class="child-box" draggable="true">paella</div>
+            <div class="child-box" draggable="true">shepherd's pie</div>
+            <div class="child-box" draggable="true">schnitzel</div>
+          </div>
+
+          <div class="parent-box" id="american_dish" draggable="true">
+            <h3>american_dish</h3>
+            <div class="child-box" draggable="true">hamburger</div>
+            <div class="child-box" draggable="true">hot dog</div>
+            <div class="child-box" draggable="true">mac and cheese</div>
+            <div class="child-box" draggable="true">buffalo wings</div>
+            <div class="child-box" draggable="true">grilled cheese</div>
+          </div>
+
+          <div class="parent-box" id="south_american_dish" draggable="true">
+            <h3>south_american_dish</h3>
+            <div class="child-box" draggable="true">tacos</div>
+            <div class="child-box" draggable="true">empanadas</div>
+            <div class="child-box" draggable="true">feijoada</div>
+            <div class="child-box" draggable="true">ceviche</div>
+            <div class="child-box" draggable="true">picanha</div>
+          </div>
+        </div>
+        <div class="swtc">
+          <label for="myCheck">store json:</label>
+          <input type="checkbox" id="myCheck" />
+        </div>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
