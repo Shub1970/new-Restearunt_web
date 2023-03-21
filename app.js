@@ -184,7 +184,6 @@ function parentDragDrop() {
   let items = document.querySelectorAll(".parent-box");
   items.forEach(function (item) {
     item.addEventListener("dragstart", phandleDragStart);
-    item.addEventListener("dragover", phandleDragOver);
     item.addEventListener("dragenter", phandleDragEnter);
     item.addEventListener("dragleave", phandleDragLeave);
     item.addEventListener("dragend", phandleDragEnd);
