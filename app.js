@@ -117,15 +117,30 @@ function handleDrop(event) {
   if (
     draggedItem &&
     event.target.classList.contains("child-box") &&
-    event.target.parentNode === draggedParent
+    event.target.parentNode === draggedParent &&
+    event.target !== draggedItem
   ) {
-    event.target.parentNode.insertBefore(draggedItem, event.target.nextSibling);
+    const targetIndex = Array.from(event.target.parentNode.childNodes).indexOf(
+      event.target
+    );
+    const draggedIndex = Array.from(draggedParent.childNodes).indexOf(
+      draggedItem
+    );
+    draggedParent.insertBefore(
+      event.target,
+      draggedParent.childNodes[draggedIndex]
+    );
+    event.target.parentNode.insertBefore(
+      draggedItem,
+      event.target.parentNode.childNodes[targetIndex]
+    );
     event.target.style.background = "";
   } else if (draggedParent && event.target.classList.contains("parent-box")) {
     const parentRect = event.target.getBoundingClientRect();
     const draggedParentRect = draggedParent.getBoundingClientRect();
-
-    if (event.clientY > parentRect.top + parentRect.height / 2) {
+    console.log("changle occur by handleDrop");
+    if (event.clientX >= parentRect.left + parentRect.width / 2) {
+      console.log(parentRect.left, parentRect.width);
       event.target.parentNode.insertBefore(
         draggedParent,
         event.target.nextSibling
@@ -148,48 +163,55 @@ parentBoxes.forEach((parentBox) => {
   parentBox.addEventListener("drop", handleDrop);
 });
 
-function parentDragDrop() {
-  var dragSrcEl = null;
-  function phandleDragStart(e) {
-    e.target.style.opacity = "1";
-    dragSrcEl = this;
-    e.dataTransfer.effectAllowed = "move";
-    e.target.classList.add("start");
-    e.dataTransfer.setData("text/html", this.innerHTML);
-  }
+// function parentDragDrop() {
+//   let dragSrcEl = null;
+//   function phandleDragStart(e) {
+//     e.target.style.opacity = "1";
+//     dragSrcEl = this;
+//     e.dataTransfer.effectAllowed = "move";
+//     e.target.classList.add("start");
+//     e.dataTransfer.setData("text/html", this.innerHTML);
+//   }
 
-  function phandleDragEnd(e) {
-    items.forEach(function (item) {
-      item.classList.remove("enter");
-      item.classList.remove("start");
-    });
-  }
+//   function phandleDragEnd(e) {
+//     items.forEach(function (item) {
+//       item.classList.remove("enter");
+//       item.classList.remove("start");
+//     });
+//   }
 
-  function phandleDragEnter(e) {
-    this.classList.add("enter");
-  }
-
-  function phandleDragLeave(e) {
-    this.classList.remove("enter");
-  }
-  function phandleDrop(e) {
-    e.stopPropagation();
-    if (dragSrcEl !== this) {
-      dragSrcEl.innerHTML = this.innerHTML;
-      this.innerHTML = e.dataTransfer.getData("text/html");
-    }
-    createJson();
-    return false;
-  }
-  let items = document.querySelectorAll(".parent-box");
-  items.forEach(function (item) {
-    item.addEventListener("dragstart", phandleDragStart);
-    item.addEventListener("dragenter", phandleDragEnter);
-    item.addEventListener("dragleave", phandleDragLeave);
-    item.addEventListener("dragend", phandleDragEnd);
-    item.addEventListener("drop", phandleDrop);
-  });
-}
+//   function phandleDragEnter(e) {
+//     this.classList.add("enter");
+//   }
+//   function phandleDragOver(e) {
+//     e.preventDefault();
+//   }
+//   function phandleDragLeave(e) {
+//     this.classList.remove("enter");
+//   }
+//   function phandleDrop(e) {
+//     e.stopPropagation();
+//     if (dragSrcEl !== this) {
+//       console.log("change occur by phandleDrop");
+//       dragSrcEl.innerHTML = this.innerHTML;
+//       this.innerHTML = e.dataTransfer.getData("text/html");
+//     }
+//     document.querySelectorAll(".child-box").forEach((child) => {
+//       child.classList.remove("start");
+//     });
+//     createJson();
+//     return false;
+//   }
+//   let items = document.querySelectorAll(".parent-box");
+//   items.forEach(function (item) {
+//     item.addEventListener("dragstart", phandleDragStart);
+//     item.addEventListener("dragenter", phandleDragEnter);
+//     item.addEventListener("dragleave", phandleDragLeave);
+//     item.addEventListener("dragend", phandleDragEnd);
+//     item.addEventListener("dragover", phandleDragOver);
+//     item.addEventListener("drop", phandleDrop);
+//   });
+// }
 
 function update_menujs() {
   let updated_catg = [];
