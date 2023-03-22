@@ -117,30 +117,15 @@ function handleDrop(event) {
   if (
     draggedItem &&
     event.target.classList.contains("child-box") &&
-    event.target.parentNode === draggedParent &&
-    event.target !== draggedItem
+    event.target.parentNode === draggedParent
   ) {
-    const targetIndex = Array.from(event.target.parentNode.childNodes).indexOf(
-      event.target
-    );
-    const draggedIndex = Array.from(draggedParent.childNodes).indexOf(
-      draggedItem
-    );
-    draggedParent.insertBefore(
-      event.target,
-      draggedParent.childNodes[draggedIndex]
-    );
-    event.target.parentNode.insertBefore(
-      draggedItem,
-      event.target.parentNode.childNodes[targetIndex]
-    );
+    event.target.parentNode.insertBefore(draggedItem, event.target.nextSibling);
     event.target.style.background = "";
   } else if (draggedParent && event.target.classList.contains("parent-box")) {
     const parentRect = event.target.getBoundingClientRect();
     const draggedParentRect = draggedParent.getBoundingClientRect();
-    console.log("changle occur by handleDrop");
-    if (event.clientX >= parentRect.left + parentRect.width / 2) {
-      console.log(parentRect.left, parentRect.width);
+
+    if (event.clientY > parentRect.top + parentRect.height / 2) {
       event.target.parentNode.insertBefore(
         draggedParent,
         event.target.nextSibling
@@ -164,7 +149,7 @@ parentBoxes.forEach((parentBox) => {
 });
 
 // function parentDragDrop() {
-//   let dragSrcEl = null;
+//   var dragSrcEl = null;
 //   function phandleDragStart(e) {
 //     e.target.style.opacity = "1";
 //     dragSrcEl = this;
@@ -183,22 +168,16 @@ parentBoxes.forEach((parentBox) => {
 //   function phandleDragEnter(e) {
 //     this.classList.add("enter");
 //   }
-//   function phandleDragOver(e) {
-//     e.preventDefault();
-//   }
+
 //   function phandleDragLeave(e) {
 //     this.classList.remove("enter");
 //   }
 //   function phandleDrop(e) {
 //     e.stopPropagation();
 //     if (dragSrcEl !== this) {
-//       console.log("change occur by phandleDrop");
 //       dragSrcEl.innerHTML = this.innerHTML;
 //       this.innerHTML = e.dataTransfer.getData("text/html");
 //     }
-//     document.querySelectorAll(".child-box").forEach((child) => {
-//       child.classList.remove("start");
-//     });
 //     createJson();
 //     return false;
 //   }
@@ -208,11 +187,39 @@ parentBoxes.forEach((parentBox) => {
 //     item.addEventListener("dragenter", phandleDragEnter);
 //     item.addEventListener("dragleave", phandleDragLeave);
 //     item.addEventListener("dragend", phandleDragEnd);
-//     item.addEventListener("dragover", phandleDragOver);
 //     item.addEventListener("drop", phandleDrop);
 //   });
 // }
-
+function parentDragDrop() {
+  let dragsrc = null;
+  document.querySelectorAll(".parent-box").forEach((box) => {
+    box.addEventListener("dragstart", function (event) {
+      dragsrc = this;
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("text/html", this.innerHTML);
+    });
+    box.addEventListener("dragenter", function () {
+      this.classList.add("enter");
+    });
+    box.addEventListener("dragleave", function () {
+      this.classList.remove("enter");
+    });
+    box.addEventListener("dragover", function () {
+      this.preventDefault();
+      return false;
+    });
+    box.addEventListener("drop", function () {
+      e.stopPropagation();
+      if (dragsrc !== this) {
+        dragsrc.innerHTML = this.innerHTML;
+        this.innerHTML = e.dataTransfer.getData("text/html");
+      }
+      createJson();
+      return false;
+    });
+  });
+}
+parentDragDrop();
 function update_menujs() {
   let updated_catg = [];
   const fooddiv = document.querySelectorAll(".parent-box");
